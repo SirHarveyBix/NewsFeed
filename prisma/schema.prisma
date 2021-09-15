@@ -1,0 +1,75 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Feed {
+  id               String        @id
+  name             String
+  url              String        @unique
+  authorId         String?
+
+  savedArticles    SavedArticle[]
+  bundles          Bundle[]
+  tags             FeedTag[]
+  likes            User[]       @relation("FeedUserLikes")
+  author           User?        @relation("FeedAuthor", fields: [authorId], references: [id])
+}
+
+model Bundle {
+  id              String        @id
+  name            String 
+  description     String        @default("")
+  authorId        String?
+
+  tags            BundleTag[]
+  feeds           Feed[]
+  likes           User[]        @relation("BundleUserLikes")
+  author          User?         @relation("BundleAuthor", fields: [authorId], references: [id])
+}
+
+model User { 
+  id            String          @id 
+  auth0         String          @unique 
+  nickname      String? 
+  picture       String?
+  authorId      String?
+
+  savedArticles SavedArticle[]
+  bundleLikes   Bundle[]       @relation("BundleUserLikes") 
+  feedLikes     Feed[]         @relation("FeedUserLikes")
+  feeds         Feed[]         @relation("FeedAuthor")
+  bundles       Bundle[]       @relation("BundleAuthor")
+}
+
+model SavedArticle {
+  id         String           @id 
+  name       String           @unique  
+  feedId     String?
+  authorId   String?
+  content    Json
+
+  author     User?            @relation(fields: [authorId], references: [id])
+  feed       Feed?            @relation(fields: [feedId], references: [id])
+}
+
+model BundleTag {
+  id         String           @id
+  name       String           @unique
+
+  bundles    Bundle[]
+}
+
+model FeedTag {
+  id        String           @id
+  name      String           @unique
+
+  feed      Feed[]
+}
