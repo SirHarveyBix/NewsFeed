@@ -5,7 +5,7 @@ import getConfig from 'next/config';
 const { publicRuntimeConfig } = getConfig();
 const { BACKEND_URL } = publicRuntimeConfig;
 
-let apolloClient;
+let apolloClient: any;
 
 function createApolloClient() {
   return new ApolloClient({
