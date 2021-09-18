@@ -5,13 +5,17 @@ import { typeDefs } from '../../utils/api/typeDefs';
 import { resolvers } from '../../utils/api/resolvers';
 import { ServerResponse } from 'http';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
+import { applyMiddleware } from 'graphql-middleware';
+import { log } from '../../utils/api/log';
+import { permissions } from '../../utils/api/permisionss';
+import { context } from '../../utils/api/context';
 
 const cors = Cors();
 export const config = { api: { bodyParser: false } };
 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
+const schema = applyMiddleware(makeExecutableSchema({ typeDefs, resolvers }), log, permissions);
 
-const apolloServer = new ApolloServer({ schema });
+const apolloServer = new ApolloServer({ schema, context });
 const startServer = apolloServer.start();
 
 export default async function handler(request: MicroRequest, response: ServerResponse) {
