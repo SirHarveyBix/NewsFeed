@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.173",
     "@types/node": "^16.9.1",
     "@types/react": "^17.0.20",
     "prisma": "3.0.2",
@@ -25,10 +26,14 @@
     "apollo-server-micro": "^3.3.0",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.3",
+    "graphql-middleware": "^6.1.6",
+    "graphql-shield": "^7.5.0",
     "graphql-tools": "^8.2.0",
+    "lodash": "^4.17.21",
     "micro-cors": "^0.1.1",
     "next": "^11.1.2",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "uuid": "^8.3.2"
   }
 }
