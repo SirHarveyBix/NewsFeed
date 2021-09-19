@@ -13,7 +13,11 @@ import { context } from '../../utils/api/context';
 const cors = Cors();
 export const config = { api: { bodyParser: false } };
 
-const schema = applyMiddleware(makeExecutableSchema({ typeDefs, resolvers }), log, permissions);
+const schema = applyMiddleware(
+  makeExecutableSchema({ typeDefs, resolvers })
+  //  log,
+  //  permissions
+);
 
 const apolloServer = new ApolloServer({ schema, context });
 const startServer = apolloServer.start();
