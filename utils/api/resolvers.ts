@@ -1,3 +1,4 @@
+import { prisma } from '.prisma/client';
 import { connect } from 'http2';
 import { disconnect } from 'process';
 
@@ -41,6 +42,12 @@ export const resolvers = {
       return prisma.bundle.findUnique({ where: { id } });
     },
     bundles: (_parent, _args, { prisma }) => prisma.bundle.findMany(),
+    findFeedTags: (_parent, { data }, { prisma }) =>
+      prisma.feedTag.findMany({ where: { name: { contains: data.search } } }),
+    findBundleTags: (_parent, { data }, { prisma }) =>
+      prisma.bundleTag.findMany({ where: { name: { contains: data.search } } }),
+    findFeeds: (_parent, { data }, { prisma }) =>
+      prisma.feed.findMany({ where: { name: { contains: data.search } } }),
   },
   Mutation: {
     createFeed: async (_parent, { data }, { prisma, user }) => {
