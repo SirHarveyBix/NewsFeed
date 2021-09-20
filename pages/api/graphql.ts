@@ -1,5 +1,6 @@
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { ApolloServer } from 'apollo-server-micro';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 import Cors from 'micro-cors';
 import { typeDefs } from '../../utils/api/typeDefs';
 import { resolvers } from '../../utils/api/resolvers';
@@ -14,12 +15,19 @@ const cors = Cors();
 export const config = { api: { bodyParser: false } };
 
 const schema = applyMiddleware(
-  makeExecutableSchema({ typeDefs, resolvers })
+  makeExecutableSchema({
+    typeDefs,
+    resolvers,
+  })
   //  log,
   //  permissions
 );
 
-const apolloServer = new ApolloServer({ schema, context });
+const apolloServer = new ApolloServer({
+  schema,
+  context,
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+});
 const startServer = apolloServer.start();
 
 export default async function handler(request: MicroRequest, response: ServerResponse) {
