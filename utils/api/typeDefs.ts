@@ -5,11 +5,22 @@ export const typeDefs = gql`
     id: String
     name: String
     url: String
+    author: User
   }
   type Bundle {
     id: String
     name: String
     description: String
+    author: User
+  }
+  type User {
+    id: String
+    auth0: String
+    nickname: String
+    picture: String
+    authorId: String
+    bundles: [Bundle]
+    feeds: [Feed]
   }
   input FeedInput {
     id: String

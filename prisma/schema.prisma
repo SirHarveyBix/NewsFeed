@@ -40,7 +40,6 @@ model User {
   auth0         String          @unique 
   nickname      String? 
   picture       String?
-  authorId      String?
 
   savedArticles SavedArticle[]
   bundleLikes   Bundle[]       @relation("BundleUserLikes") 
