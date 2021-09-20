@@ -24,7 +24,6 @@ CREATE TABLE "User" (
     "auth0" TEXT NOT NULL,
     "nickname" TEXT,
     "picture" TEXT,
-    "authorId" TEXT,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
