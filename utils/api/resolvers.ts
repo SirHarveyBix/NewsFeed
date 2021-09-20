@@ -10,10 +10,12 @@ export const resolvers = {
   },
   Mutation: {
     createFeed: async (_parent, { data }, { prisma, user }) => {
+      const author = { author: { connect: { id: user.id } } };
       const result = await prisma.feed.create({ data: { ...data } });
       return result;
     },
     createBundle: async (_parent, { data }, { prisma, user }) => {
+      const author = { author: { connect: { id: user.id } } };
       const result = await prisma.bundle.create({ data: { ...data } });
       return result;
     },
