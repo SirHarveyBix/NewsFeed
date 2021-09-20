@@ -14,9 +14,19 @@ export const resolvers = {
     //   prisma.user.fundUnique({ where: { id: authorId } });
     // },
     ...creatFieldResolver('feed', 'author'),
+    ...creatFieldResolver('feed', 'tags'),
+    ...creatFieldResolver('feed', 'bundles'),
   },
   Bundle: {
     ...creatFieldResolver('bundle', 'author'),
+    ...creatFieldResolver('bundle', 'tags'),
+    ...creatFieldResolver('bundle', 'feeds'),
+  },
+  BundleTag: {
+    ...creatFieldResolver('bundleTag', 'bundles'),
+  },
+  FeedTag: {
+    ...creatFieldResolver('feedTag', 'feeds'),
   },
   Query: {
     hello: (_parent, _args, _context, _info) => 'hi!',
@@ -34,7 +44,7 @@ export const resolvers = {
       return result;
     },
     createBundle: async (_parent, { data }, { prisma, user }) => {
-      const author = { author: { conect: { id: user.id } } };
+      const author = { author: { connect: { id: user.id } } };
       const result = await prisma.bundle.create({ data: { ...data, ...author } });
       return result;
     },

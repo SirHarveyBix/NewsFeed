@@ -7,7 +7,7 @@ import { ServerResponse } from 'http';
 import { MicroRequest } from 'apollo-server-micro/dist/types';
 import { applyMiddleware } from 'graphql-middleware';
 import { log } from '../../utils/api/log';
-import { permissions } from '../../utils/api/permisionss';
+import { permissions } from '../../utils/api/permissions';
 import { context } from '../../utils/api/context';
 
 const cors = Cors();
