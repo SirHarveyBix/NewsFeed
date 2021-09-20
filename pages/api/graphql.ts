@@ -9,6 +9,7 @@ import { applyMiddleware } from 'graphql-middleware';
 import { log } from '../../utils/api/log';
 import { permissions } from '../../utils/api/permissions';
 import { context } from '../../utils/api/context';
+import { ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core';
 
 const cors = Cors();
 export const config = { api: { bodyParser: false } };
@@ -19,7 +20,11 @@ const schema = applyMiddleware(
   //  permissions
 );
 
-const apolloServer = new ApolloServer({ schema, context });
+const apolloServer = new ApolloServer({
+  schema,
+  context,
+  plugins: [ApolloServerPluginLandingPageGraphQLPlayground()],
+});
 const startServer = apolloServer.start();
 
 export default async function handler(request: MicroRequest, response: ServerResponse) {
