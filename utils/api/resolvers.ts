@@ -16,7 +16,7 @@ export const resolvers = {
     ...creatFieldResolver('feed', 'author'),
   },
   Bundle: {
-    ...creatFieldResolver('feed', 'author'),
+    ...creatFieldResolver('bundle', 'author'),
   },
   Query: {
     hello: (_parent, _args, _context, _info) => 'hi!',
