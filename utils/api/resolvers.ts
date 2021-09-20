@@ -1,3 +1,6 @@
+import { connect } from 'http2';
+import { disconnect } from 'process';
+
 const creatFieldResolver = (modelName, parName) => ({
   [parName]: async ({ id }, args, { prisma }) => {
     const modelResponse = await prisma[modelName].findUnique({
@@ -16,11 +19,13 @@ export const resolvers = {
     ...creatFieldResolver('feed', 'author'),
     ...creatFieldResolver('feed', 'tags'),
     ...creatFieldResolver('feed', 'bundles'),
+    ...creatFieldResolver('feed', 'likes'),
   },
   Bundle: {
     ...creatFieldResolver('bundle', 'author'),
     ...creatFieldResolver('bundle', 'tags'),
     ...creatFieldResolver('bundle', 'feeds'),
+    ...creatFieldResolver('bundle', 'likes'),
   },
   BundleTag: {
     ...creatFieldResolver('bundleTag', 'bundles'),
@@ -47,6 +52,22 @@ export const resolvers = {
       const author = { author: { connect: { id: user.id } } };
       const result = await prisma.bundle.create({ data: { ...data, ...author } });
       return result;
+    },
+    likeBundle: (_parent, { data }, { prisma, user }, _info) => {
+      const { bundleId, likeState } = data;
+      const connectState = likeState ? 'connect' : 'disconnect';
+      return prisma.bundle.update({
+        where: { id: bundleId },
+        data: { likes: { [connectState]: { id: user.id } } },
+      });
+    },
+    likeFeed: (_parent, { data }, { prisma, user }, _info) => {
+      const { feedId, likeState } = data;
+      const connectState = likeState ? 'connect' : 'disconnect';
+      return prisma.feed.update({
+        where: { id: feedId },
+        data: { like: { [connectState]: { id: user.id } } },
+      });
     },
   },
 };
