@@ -2,7 +2,7 @@ import { gql } from 'apollo-server-micro';
 
 export const typeDefs = gql`
   type Feed {
-    id: String
+    id: ID
     name: String
     url: String
     author: User
@@ -11,7 +11,7 @@ export const typeDefs = gql`
     likes: [User]
   }
   type Bundle {
-    id: String
+    id: ID
     name: String
     description: String
     author: User
@@ -20,7 +20,7 @@ export const typeDefs = gql`
     likes: [User]
   }
   type User {
-    id: String
+    id: ID
     auth0: String
     nickname: String
     picture: String
@@ -31,24 +31,24 @@ export const typeDefs = gql`
   }
 
   type FeedTag {
-    id: String
+    id: ID
     name: String
     feeds: [Feed]
   }
   type BundleTag {
-    id: String
+    id: ID
     name: String
     bundles: [Bundle]
   }
 
   input FeedInput {
-    id: String
+    id: ID
   }
   input BundleInput {
-    id: String
+    id: ID
   }
   input FeedCreateInput {
-    id: String
+    id: ID
     url: String
     name: String
     tags: NestedFeedTagCreateInput
@@ -59,7 +59,7 @@ export const typeDefs = gql`
   }
 
   input BundleCreateInput {
-    id: String
+    id: ID
     name: String
     description: String
     tags: NestedBundleTagCreateInput
@@ -74,32 +74,32 @@ export const typeDefs = gql`
     connect: [FeedWhereUniqueInput]
   }
   input FeedTagCreateInput {
-    id: String
+    id: ID
     name: String
   }
   input FeedWhereUniqueInput {
-    id: String
+    id: ID
     name: String
   }
   input FeedTagWhereUniqueInput {
-    id: String
+    id: ID
     name: String
   }
   input BundleTagCreateInput {
-    id: String
+    id: ID
     name: String
   }
   input BundleTagWhereUniqueInput {
-    id: String
+    id: ID
     name: String
   }
 
   input LikeBundleInput {
-    bundleId: String
+    bundleId: ID
     likeState: Boolean
   }
   input LikeFeedInput {
-    feedId: String
+    feedId: ID
     likeState: Boolean
   }
 
@@ -112,6 +112,39 @@ export const typeDefs = gql`
 
   input FindFeedsInput {
     search: String
+  }
+
+  input FeedUpdateInput {
+    id: ID
+    url: String
+    name: String
+    tags: NestedFeedTagUpdateInput
+  }
+
+  input NestedFeedTagUpdateInput {
+    create: [FeedTagCreateInput]
+    connect: [FeedTagWhereUniqueInput]
+    disconnect: [FeedTagWhereUniqueInput]
+  }
+
+  input BundleUpdateInput {
+    id: ID
+    name: String
+    description: String
+    tags: NestedBundleTagCreateInput
+    feeds: NestedBundleFeedUpdateInput
+  }
+
+  input NestedBundleTagCreateInput {
+    create: [BundleTagCreateInput]
+    connect: [BundleTagWhereUniqueInput]
+    disconnect: [BundleTagWhereUniqueInput]
+  }
+
+  input NestedBundleFeedUpdateInput {
+    create: [FeedTagCreateInput]
+    connect: [FeedWhereUniqueInput]
+    disconnect: [FeedWhereUniqueInput]
   }
 
   type Query {
@@ -129,5 +162,7 @@ export const typeDefs = gql`
     createBundle(data: BundleCreateInput): Bundle
     likeBundle(data: LikeBundleInput): Bundle
     likeFeed(data: LikeFeedInput): Feed
+    updateFeed(data: FeedUpdateInput): Feed
+    updateBundle(data: BundleUpdateInput): Bundle
   }
 `;
