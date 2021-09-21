@@ -1,6 +1,7 @@
 import { prisma } from '.prisma/client';
 import { connect } from 'http2';
 import { disconnect } from 'process';
+import { verifyOwnership } from './verifyOwnerShip';
 
 const creatFieldResolver = (modelName, parName) => ({
   [parName]: async ({ id }, args, { prisma }) => {
@@ -75,6 +76,18 @@ export const resolvers = {
         where: { id: feedId },
         data: { like: { [connectState]: { id: user.id } } },
       });
+    },
+    updateFeed: async (_parent, { data: { id, ...feedUpdate } }, { prisma, user }) => {
+      // verify if user own the feed
+      const feed = await prisma.feed.findUnique({ where: { id }, include: { author: true } });
+      await verifyOwnership(feed, user); // throw the Error(message)
+      return prisma.feed.update({ where: { id }, data: { ...feedUpdate } });
+    },
+    updateBundle: async (_parent, { data: { id, ...bundleUpdate } }, { prisma, user }) => {
+      // verify if user own the bundle
+      const bundle = await prisma.findUnique({ where: { id }, include: { author: true } });
+      await verifyOwnership(bundle, user); // throw the Error(message)
+      return prisma.bundle.update({ where: { id }, data: { ...bundleUpdate } });
     },
   },
 };
