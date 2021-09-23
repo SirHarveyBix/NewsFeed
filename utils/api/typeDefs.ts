@@ -159,7 +159,7 @@ export const typeDefs = gql`
   }
 
   input SavedArticleInput {
-    id: ID
+    id: ID # to find by id and url Same for deletion : instead of DeleteSavedArticleInput
     url: String
   }
 
@@ -194,5 +194,8 @@ export const typeDefs = gql`
     updateFeed(data: FeedUpdateInput): Feed
     updateBundle(data: BundleUpdateInput): Bundle
     createSavedArticle(data: SavedArticleCreateInput): SavedArticle
+    deleteBundle(data: BundleInput): Bundle
+    deleteFeed(data: FeedInput): Feed
+    deleteSavedArticle(data: SavedArticleInput): SavedArticle
   }
 `;
