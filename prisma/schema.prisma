@@ -50,10 +50,10 @@ model User {
 
 model SavedArticle {
   id         String           @id 
-  name       String           @unique  
   feedId     String?
   authorId   String?
   content    Json
+  url        String
 
   author     User?            @relation(fields: [authorId], references: [id])
   feed       Feed?            @relation(fields: [feedId], references: [id])
