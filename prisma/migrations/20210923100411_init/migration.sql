@@ -31,10 +31,10 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "SavedArticle" (
     "id" TEXT NOT NULL,
-    "name" TEXT NOT NULL,
     "feedId" TEXT,
     "authorId" TEXT,
     "content" JSONB NOT NULL,
+    "url" TEXT NOT NULL,
 
     CONSTRAINT "SavedArticle_pkey" PRIMARY KEY ("id")
 );
@@ -90,9 +90,6 @@ CREATE UNIQUE INDEX "Feed_url_key" ON "Feed"("url");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User_auth0_key" ON "User"("auth0");
-
--- CreateIndex
-CREATE UNIQUE INDEX "SavedArticle_name_key" ON "SavedArticle"("name");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "BundleTag_name_key" ON "BundleTag"("name");

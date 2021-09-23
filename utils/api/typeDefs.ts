@@ -9,6 +9,7 @@ export const typeDefs = gql`
     tags: [FeedTag]
     bundles: [Bundle]
     likes: [User]
+    savedArticles: [SavedArticle]
   }
   type Bundle {
     id: ID
@@ -79,7 +80,7 @@ export const typeDefs = gql`
   }
   input FeedWhereUniqueInput {
     id: ID
-    name: String
+    url: String
   }
   input FeedTagWhereUniqueInput {
     id: ID
@@ -142,9 +143,34 @@ export const typeDefs = gql`
   }
 
   input NestedBundleFeedUpdateInput {
-    create: [FeedTagCreateInput]
+    create: [FeedCreateInput]
     connect: [FeedWhereUniqueInput]
     disconnect: [FeedWhereUniqueInput]
+  }
+
+  scalar JSON
+
+  type SavedArticle {
+    id: ID
+    author: User
+    url: String
+    content: JSON
+    feed: Feed
+  }
+
+  input SavedArticleInput {
+    id: ID
+    url: String
+  }
+
+  input SavedArticleCreateInput {
+    id: ID
+    feed: NestedFeedCreateInput
+    content: JSON
+    url: String
+  }
+  input NestedFeedCreateInput {
+    connect: FeedWhereUniqueInput
   }
 
   type Query {
@@ -156,6 +182,9 @@ export const typeDefs = gql`
     findFeedTags(data: FindFeedTagsInput): [FeedTag]
     findBundleTags(data: FindBundleTagsInput): [BundleTag]
     findFeeds(data: FindFeedsInput): [Feed]
+    savedArticle(data: SavedArticleInput): SavedArticle
+    savedArticles: [SavedArticle]
+    me: User
   }
   type Mutation {
     createFeed(data: FeedCreateInput): Feed
@@ -164,5 +193,6 @@ export const typeDefs = gql`
     likeFeed(data: LikeFeedInput): Feed
     updateFeed(data: FeedUpdateInput): Feed
     updateBundle(data: BundleUpdateInput): Bundle
+    createSavedArticle(data: SavedArticleCreateInput): SavedArticle
   }
 `;
