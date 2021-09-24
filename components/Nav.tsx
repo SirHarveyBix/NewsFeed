@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { useFetchUser } from '../utils/user';
+import { useUser } from '@auth0/nextjs-auth0';
 
 export const Nav = () => {
-  const { user, loading } = useFetchUser();
+  const { user, error, isLoading } = useUser();
 
   return (
     <ul className="flex grid grid-cols-4">
@@ -37,15 +37,15 @@ export const Nav = () => {
             <a className="p-2 text-center block hover:blue-700 text-blue-500">Feeds</a>
           </Link>
         </li>
-        {user && !loading ? (
+        {user && !isLoading ? (
           <li className="sm:mr-6">
-            <Link href="/api/logout">
+            <Link href="/api/auth/logout">
               <a className="p-2 text-center block hover:blue-700 text-blue-500">Logout</a>
             </Link>
           </li>
         ) : (
           <li className="sm:mr-6">
-            <Link href="/api/login">
+            <Link href="/api/auth/login">
               <a className="p-2 text-center block hover:blue-700 text-blue-500">Login</a>
             </Link>
           </li>
