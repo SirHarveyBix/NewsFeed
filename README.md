@@ -11,4 +11,4 @@ If you want to use apollo studio instead of graphql Playground, remove plugins l
 
 meanwhile .. this works fine : [Apollo Studio](https://studio.apollographql.com/sandbox/explorer)
 
-you need to create you account on Auth0 follow what you see on \_.env, then you must add " http://localhost:3000/api/auth/callback " in Allowed Callback URLs
+you need to create an Auth0 account, follow what you see on .env, then you must add " http://localhost:3000/api/auth/callback " in Allowed Callback URLs
