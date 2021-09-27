@@ -8,10 +8,10 @@ export const FEED_TAG_FRAGMENT = gql`
 `;
 
 export const BUNDLE_TAG_FRAGMENT = gql`
-frangment BundleTagFragment on FeedTag{
-  id 
-  name
-}
+  fragment BundleTagFragment on BundleTag {
+    id
+    name
+  }
 `;
 
 export const AUTHOR_FRAGMENT = gql`
@@ -60,7 +60,7 @@ export const BUNDLE_FRAGMENT = gql`
     author {
       ...AuthorFragment
     }
-    lokes {
+    likes {
       ...AuthorFragment
     }
   }
