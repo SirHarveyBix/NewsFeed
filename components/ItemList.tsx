@@ -26,24 +26,9 @@ export const ItemList = ({
 
   useEffect(() => {
     (async () => {
-      if (useSelected && itemList.lenght > 0 && selected.id == null) {
+      if (itemList.lenght > 0 && useSelected && selected.id === null) {
         const firstItem = itemList[0];
-        await setSelected({
-          id: firstItem.id,
-          feeds: isFeed ? [firstItem] : firstItem['feeds'],
-          editMode: false,
-          newMode: false,
-        });
-      }
-    })();
-  }, []);
-
-  useEffect(() => {
-    (async () => {
-      console.log(itemList);
-      if (useSelected && itemList.lenght > 0 && selected.id == null) {
-        const firstItem = itemList[0];
-        await setSelected({
+        setSelected({
           id: firstItem.id,
           feeds: isFeed ? [firstItem] : firstItem['feeds'],
           editMode: false,
@@ -61,9 +46,9 @@ export const ItemList = ({
         {itemList.length > 0 ? (
           itemList.map((item: FeedObject | BundleObject) => (
             <OneListItem
-              key={item.id}
               type={type}
               item={item}
+              key={item.id}
               useSelected={useSelected}
               allowEdits={allowEdits}
               selected={selected}

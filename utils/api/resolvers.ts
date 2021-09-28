@@ -1,4 +1,3 @@
-import { prisma } from '.prisma/client';
 import { verifyOwnership } from './verifyOwnerShip';
 
 const createFieldResolver = (modelName, parName) => ({
