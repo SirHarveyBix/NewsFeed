@@ -132,11 +132,11 @@ export const typeDefs = gql`
     id: ID
     name: String
     description: String
-    tags: NestedBundleTagCreateInput
+    tags: NestedBundleTagUpdateInput
     feeds: NestedBundleFeedUpdateInput
   }
 
-  input NestedBundleTagCreateInput {
+  input NestedBundleTagUpdateInput {
     create: [BundleTagCreateInput]
     connect: [BundleTagWhereUniqueInput]
     disconnect: [BundleTagWhereUniqueInput]
@@ -164,7 +164,6 @@ export const typeDefs = gql`
   }
 
   input SavedArticleCreateInput {
-    id: ID
     feed: NestedFeedCreateInput
     content: JSON
     url: String

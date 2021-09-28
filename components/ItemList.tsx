@@ -16,8 +16,8 @@ export const ItemList = ({
   type: ItemType;
   selected?: SelectedFeedState;
   setSelected?: Dispatch<SetStateAction<SelectedFeedState>>;
-  useSelected: boolean;
-  allowEdits: boolean;
+  useSelected?: boolean;
+  allowEdits?: boolean;
 }) => {
   const isFeed = type === ItemType.FeedType;
   const { loading, error, data } = useQuery(isFeed ? FEEDS_QUERY : BUNDLES_QUERY);
@@ -26,7 +26,7 @@ export const ItemList = ({
 
   useEffect(() => {
     (async () => {
-      if (itemList.lenght > 0 && useSelected && selected.id === null) {
+      if (useSelected && itemList && itemList.length > 0 && selected.id === null) {
         const firstItem = itemList[0];
         setSelected({
           id: firstItem.id,
@@ -36,14 +36,14 @@ export const ItemList = ({
         });
       }
     })();
-  }, []);
+  });
 
   if (loading) return <NotifyLoading />;
-  if (error) return <NotifyError />;
+  if (error || !itemList) return <NotifyError />;
   return (
     <>
-      <div className="grid lg:grid-cols-3 md:grid:cols-2 gap-4">
-        {itemList.length > 0 ? (
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
+        {itemList && itemList.length > 0 ? (
           itemList.map((item: FeedObject | BundleObject) => (
             <OneListItem
               type={type}
