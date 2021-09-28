@@ -23,7 +23,20 @@ export const ItemList = ({
   const { loading, error, data } = useQuery(isFeed ? FEEDS_QUERY : BUNDLES_QUERY);
   const { feeds, bundles } = data || {};
   const itemList = isFeed ? feeds : bundles;
-  console.log(itemList);
+
+  useEffect(() => {
+    (async () => {
+      if (useSelected && itemList.lenght > 0 && selected.id == null) {
+        const firstItem = itemList[0];
+        await setSelected({
+          id: firstItem.id,
+          feeds: isFeed ? [firstItem] : firstItem['feeds'],
+          editMode: false,
+          newMode: false,
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async () => {
