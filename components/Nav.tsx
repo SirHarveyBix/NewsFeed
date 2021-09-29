@@ -28,12 +28,12 @@ export const Nav = () => {
         ) : null}
 
         <li className="sm:mr-6">
-          <Link href="/bundles">
+          <Link href="/Bundles">
             <a className="p-2 text-center block hover:blue-700 text-blue-500">Bundles</a>
           </Link>
         </li>
         <li className="sm:mr-6">
-          <Link href="/feeds">
+          <Link href="/Feeds">
             <a className="p-2 text-center block hover:blue-700 text-blue-500">Feeds</a>
           </Link>
         </li>
